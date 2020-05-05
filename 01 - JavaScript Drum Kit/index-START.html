@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>JS Drum Kit</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 
@@ -57,10 +59,68 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
-<script>
+  <script>
 
-</script>
+    function playSound(event) {
+      // console.log(event);
+
+      // document.querySelector for one query 
+      // document.querySelectorAll for many queries
+      // [data-key="value"] => CSS query selector
+      const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+      const key = document.querySelector(`.key[data-key="${event.keyCode}"]`);
+
+      // console.log(audio);
+      // console.log(key);
+
+      // exit audio if null i.e no query in selector
+      if (!audio) return;
+
+      //add class to class list of key
+      key.classList.add('playing');
+
+
+
+      // reset audio at every key press to play on continuous stroke
+      audio.currentTime = 0;
+
+      // play the audio
+      audio.play();
+
+      // set separate listener for every keydown to remove animation
+    }
+
+    function removeTransition(event) {
+      // console.log(event);
+
+      // console.log(event.propertyName);
+
+      // stop function of event property isnt transform
+      if (event.propertyName !== 'transform') return;
+
+      // removes playing class as soon as transition ends
+      // this -> current referenced element
+      this.classList.remove('playing');
+
+    }
+
+    const keys = document.querySelectorAll(".key");
+    // console.log(keys);
+
+    keys.forEach(function (key) {
+      // console.log(key);
+
+      // listener for transitionend for each key
+      key.addEventListener('transitionend', removeTransition);
+    });
+
+
+    // listen to the events on that window
+    window.addEventListener('keydown', playSound);
+
+  </script>
 
 
 </body>
+
 </html>
