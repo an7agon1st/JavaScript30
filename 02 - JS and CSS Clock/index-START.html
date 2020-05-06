@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>JS + CSS Clock</title>
 </head>
+
 <body>
 
 
-    <div class="clock">
-      <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
-      </div>
+  <div class="clock">
+    <div class="clock-face">
+      <div class="hand hour-hand"></div>
+      <div class="hand min-hand"></div>
+      <div class="hand second-hand"></div>
     </div>
+  </div>
 
 
   <style>
@@ -43,17 +45,18 @@
       position: relative;
       padding: 2rem;
       box-shadow:
-        0 0 0 4px rgba(0,0,0,0.1),
+        0 0 0 4px rgba(0, 0, 0, 0.1),
         inset 0 0 0 3px #EFEFEF,
         inset 0 0 10px black,
-        0 0 10px rgba(0,0,0,0.2);
+        0 0 10px rgba(0, 0, 0, 0.2);
     }
 
     .clock-face {
       position: relative;
       width: 100%;
       height: 100%;
-      transform: translateY(-3px); /* account for the height of the clock hands */
+      transform: translateY(-3px);
+      /* account for the height of the clock hands */
     }
 
     .hand {
@@ -62,13 +65,53 @@
       background: black;
       position: absolute;
       top: 50%;
+      /* initial angle is horizontal so we shift it to 90deg at verical (pointing at 12 oclock) */
+      transform: rotate(90deg);
+      /* shift the origin to the start of the line instead of the middle
+       */
+      transform-origin: 100%;
+      transition: all 0.1s;
+      /* Curve for the animation */
+      transition-timing-function: cubic-bezier(0, 2.97, 0.67, 0.12);
     }
-
   </style>
+
 
   <script>
 
+    const secondHand = document.querySelector('.second-hand');
+    const minuteHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
+    
+
+    // console.log(minuteHand);
+
+    function setTime() {
+      // get the date
+      const date = new Date();
+      // get the seconds
+      const seconds = date.getSeconds();
+      const minutes = date.getMinutes();
+      const hours = date.getHours();
+      // degrees per seconds and added 90 for initial offset
+      const secondDeg = ((seconds / 60) * 360) + 90;
+      const minutesDeg = ((minutes / 60) * 360) + 90;
+      const hoursDeg = ((hours / 12) * 360) + 90;
+
+      console.log(`${hours} : ${minutes} : ${seconds}`);
+
+      // set degrees to the seconds hand
+      secondHand.style.transform = `rotate(${secondDeg}deg)`;
+      minuteHand.style.transform = `rotate(${minutesDeg}deg)`;
+      hourHand.style.transform = `rotate(${hoursDeg}deg)`;
+
+
+    }
+
+    // execute every second 
+    setInterval(setTime, 1000);
 
   </script>
 </body>
+
 </html>
