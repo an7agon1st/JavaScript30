@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Scoped CSS Variables and JS</title>
 </head>
+
 <body>
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
 
   <div class="controls">
     <label for="spacing">Spacing:</label>
-    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+    <input id="spacing" type="range" name="spacing" min="1" max="200" value="10" data-sizing="px">
 
     <label for="blur">Blur:</label>
     <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
@@ -21,6 +23,27 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    /* USING CSS VARIABLES. Different from SASS where once its compiled it cannot be changed live using JS */
+
+    /* Defining variable at root level */
+    :root {
+      /* syntax for CSS variables */
+      /* names defined in name property of respective tags */
+      --spacing: 10px;
+      --blur: 10px;
+      --base: #ffc600;
+    }
+
+    .hl {
+      /* using CSS variables */
+      color: var(--base);
+    }
+
+    img {
+      background-color: var(--base);
+      padding: var(--spacing);
+      filter: blur(var(--blur));
+    }
 
     /*
       misc styles, nothing to do with CSS variables
@@ -45,7 +68,26 @@
   </style>
 
   <script>
+    const inputs = document.querySelectorAll('.controls input');
+    // console.log(elements);
+
+    function changeValue() {
+      // dataset contains all fields of data-* in the html element
+      const metric = this.dataset.sizing || '';
+      console.log(metric);
+
+      // since the variables at root, we need to edit the document
+      // change variable that is a property
+      document.documentElement.style.setProperty(`--${this.name}`,  this.value + metric);
+    }
+
+    // Listen for change
+    inputs.forEach(input => input.addEventListener('change', changeValue));
+    // also listen to mouse move
+    inputs.forEach(input => input.addEventListener('mousemove', changeValue));
+
   </script>
 
 </body>
+
 </html>
