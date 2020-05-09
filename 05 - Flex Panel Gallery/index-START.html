@@ -26,6 +26,8 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+      /*making it a flex box */
+      display: flex;
     }
 
     .panel {
@@ -43,6 +45,12 @@
       font-size: 20px;
       background-size: cover;
       background-position: center;
+      /* panels need equal spacing hence the flex property */
+      flex: 1;
+      /* panel is a flex box to center the text */
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
     }
 
     .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
@@ -56,6 +64,32 @@
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
+      /* border to see the children */
+      /* border: 1px  solid red ; */
+
+      /* distribute the children */
+      flex: 1 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* translate the children along y,axis */
+    
+    /* child hidden */
+    .panel > *:first-child {
+      transform: translateY(-100%);
+    }
+    .panel > *:last-child {
+      transform: translateY(100%);
+    }
+
+    /* child shown */
+    .panel.open-active > *:first-child {
+      transform: translateY(0);
+    }
+    .panel.open-active > *:last-child {
+      transform: translateY(0);
     }
 
     .panel p {
@@ -65,12 +99,15 @@
       font-size: 2em;
     }
     
+    /* SELECT THE CHILD IN BRACES */
     .panel p:nth-child(2) {
       font-size: 4em;
     }
 
+    /* when the panel is opened */
     .panel.open {
       font-size: 40px;
+      flex: 5;
     }
 
   </style>
@@ -105,6 +142,31 @@
   </div>
 
   <script>
+
+    const allPanels = document.querySelectorAll('.panel');
+    // console.log(allPanels);
+
+    // listen for clicks and toggle class open on clicks
+    function togglePanelOpen (){
+      this.classList.toggle('open');
+    }
+
+    function toggleTextIn(event){
+      // console.log(event);
+
+      // safari has flex, chrome has flex-grow
+      if(event.propertyName.includes('flex')){
+        this.classList.toggle('open-active');
+      }
+
+    }
+
+    // listen for clicks 
+    allPanels.forEach((panel) => panel.addEventListener('click', togglePanelOpen));
+
+    // listen for transition end
+    allPanels.forEach((panel) => panel.addEventListener('transitionend', toggleTextIn));
+
 
   </script>
 
