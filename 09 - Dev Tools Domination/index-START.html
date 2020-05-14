@@ -11,6 +11,8 @@
   <script>
     const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
 
+
+    // to see changes in the element, use break-on > attribute modifcations
     function makeGreen() {
       const p = document.querySelector('p');
       p.style.color = '#BADA55';
@@ -19,28 +21,101 @@
 
     // Regular
 
+    console.log('Hello');
+
     // Interpolated
+
+    // like C
+    console.log('hello %s', 'tanzil')
 
     // Styled
 
+    // style text using %c
+    console.log('%c This is styled', 'color: red; font-size: 32px')
+
     // warning!
+    
+    // show a warning with stack trace
+    console.warn('CAREFUL THERE!');
 
     // Error :|
 
+    // show a error with stack trace
+    console.error('OH CRAP!!!');
+
     // Info
+    
+    // show some info
+    console.info('Heres something interesting');
 
     // Testing
 
+    // assert something, show message is failed assertion
+    console.assert(1===2 , 'Ooopsie something went wrong')
+
     // clearing
+
+    console.clear();
 
     // Viewing DOM Elements
 
+    // view dom elements using log or dir
+    // dir shows all attributes and prototypes
+    const p = document.querySelector('p');
+    console.dir(p);
+
     // Grouping together
+
+    // group console messages
+    dogs.forEach((dog) => {
+      // can also use group collapsed
+      console.group(`${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+      console.groupEnd(`${dog.name}`);
+    })
 
     // counting
 
+    // count certain messages
+
+    console.count('Tanzil');
+    console.count('Tanzil');
+    console.count('Tanzil');
+    console.count('Tanzil');
+    console.count('Tanzil');
+    console.count('Tanzil');
+    console.count('Tanzil');
+    console.count('Omar');
+    console.count('Tanzil');
+    console.count('Tanzil');
+    console.count('Omar');
+    console.count('Tanzil');
+    console.count('Omar');
+    console.count('Omar');
+    console.count('Omar');
+    console.count('Tanzil');
+    console.count('Tanzil');
+    console.count('Omar');
+    console.count('Omar');
+    console.count('Tanzil');
+
+
     // timing
 
+    // time something
+    console.time('fetch');
+    fetch('https://api.github.com/users/wesbos').then((data) => 
+      data.json().then(()=>{
+        console.timeEnd('fetch');
+        console.log(data.body)
+    }));
+
+
+    // table
+    console.table(dogs);
+
+    
   </script>
 </body>
 </html>
