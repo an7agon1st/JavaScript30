@@ -1,12 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Key Detection</title>
   <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
 </head>
+
 <body>
-<script>
-</script>
+  <script>
+    const keysPressed = [];
+    const secretCode = 'an7agon1st';
+
+    function handleKeyPresses(event) {
+      // console.log(event)
+
+      // add the pressed key to array
+      keysPressed.push(event.key);
+
+      // splice the array to just contain the number of chars in secretCode
+      keysPressed.splice(-secretCode.length - 1, keysPressed.length - secretCode.length);
+
+      if(keysPressed.join('').toLowerCase() == secretCode)
+        cornify_add();
+
+      console.log(keysPressed.join('').toLowerCase());
+
+    }
+
+    window.addEventListener('keyup', handleKeyPresses)
+
+  </script>
 </body>
+
 </html>
