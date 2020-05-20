@@ -9,12 +9,23 @@
   <script>
     // start with strings, numbers and booleans
 
+    /// these are primitive and are not passed by reference
+
     // Let's say we have an array
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
     // and we want to make a copy of it.
 
     // You might think we can just do something like this:
+
+    const play2 = players; // this makes a reference of the players
+
+    console.log(players, play2);
+
+    play2[0] = 'WOHOOO changed';
+
+    console.log(players, play2);
+
 
     // however what happens when we update that array?
 
@@ -28,9 +39,17 @@
 
     // one way
 
+    const play3 = player.slice(); // this creates a copy of the array
+    
+    const play4 = [].concat(players); // this also creates a copy
+
     // or create a new array and concat the old one in
 
     // or use the new ES6 Spread
+
+    const play5 = [...players]; // this creates a copy very elegantly
+    
+    const play6 = Array.from(players);  // this also creates a copy but less elegantly
 
     // now when we update it, the original one isn't changed
 
@@ -46,7 +65,13 @@
 
     // how do we take a copy instead?
 
+    const per2 = person;  // passed by reference
+
     // We will hopefully soon see the object ...spread
+
+    const per3 = Object.from({}, person, {allThe: 'Extras'}); //  ( empty, to_be_copied_array, extra_elements_we_might_wanna_add )
+
+    const per4 = {...person}; // we're back to elegance
 
     // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
 
