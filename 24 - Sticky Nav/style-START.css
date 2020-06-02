@@ -28,7 +28,7 @@ body {
 header {
   text-align: center;
   height: 50vh;
-  background: url(http://wes.io/iEgP/wow-so-deep.jpg) bottom center no-repeat;
+  background: url(Om3yOQJ.jpg) bottom center no-repeat;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -65,13 +65,22 @@ nav li {
   align-items: center;
 }
 
+.stick-nav nav {
+  position: fixed;;
+}
+
 li.logo {
   max-width: 0;
   overflow: hidden;
   background: white;
-  transition: all .5s;
+  transition: all 1s;
   font-weight: 600;
   font-size: 30px;
+}
+
+/* max width is used because that can be animated  */
+.stick-nav li.logo {
+  max-width: 500px;
 }
 
 li.logo a {

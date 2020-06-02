@@ -54,6 +54,22 @@
   </div>
 
 <script>
+  const nav = document.querySelector('#main');
+  const navOffset = nav.offsetTop;
+  // console.log(navOffset);
+
+function stickNav(){
+  if(window.scrollY >= navOffset){
+    document.body.classList.add('stick-nav');
+    document.body.style.paddingTop = `${nav.offsetHeight}px`;
+  } else {
+    document.body.classList.remove('stick-nav');
+    document.body.style.paddingTop = 0;
+  }
+  // console.log(window.scrollY, navOffset);
+}
+
+window.addEventListener('scroll', stickNav)
 
 </script>
 
