@@ -17,9 +17,9 @@
   html {
     box-sizing: border-box;
   }
-  
-  *, *:before, *:after { 
-    box-sizing: inherit; 
+
+  *, *:before, *:after {
+    box-sizing: inherit;
   }
 
   div {
@@ -42,7 +42,27 @@
 
 <button></button>
 <script>
+  const divs = document.querySelectorAll('div')
 
+  function handleClick(e) {
+    console.log(this.classList.value);
+    e.stopPropagation();
+  }
+
+  // be default, the events are captured bottom up, stored in a stack and then the functions executed top down as
+  // the stack elements are popped off
+
+  // using the object property capture: true executes the function bottom up as the events are captured
+
+  // we can call the stopPropagation function on the event object to stop the event bubbling or capturing
+
+  // once: true object property can be used to unbind the event once the event has been captured. The event is then
+  // unbinded
+
+  divs.forEach(div => div.addEventListener('click', handleClick, {
+    // capture: true,
+    // once: true,
+  }));
 </script>
 </body>
 </html>
