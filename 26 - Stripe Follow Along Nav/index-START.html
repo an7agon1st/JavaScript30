@@ -79,11 +79,11 @@
     box-sizing: border-box;
     font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
   }
-  
+
   *, *:before, *:after {
     box-sizing: inherit;
   }
-  
+
   body {
     margin: 0;
     min-height: 100vh;
@@ -149,7 +149,7 @@
   .trigger-enter-active .dropdown {
     opacity: 1;
   }
-  
+
   .dropdownBackground {
     width: 100px;
     height: 100px;
@@ -218,8 +218,46 @@
   .button[href*=facebook] { background: #3B5998; }
   .button[href*=courses] { background: #ffc600; }
 </style>
-
 <script>
+  const navItems = document.querySelectorAll('.cool > li');
+  const navBubble = document.querySelector('.dropdownBackground');
+  const nav = document.querySelector('.top');
+
+  function hoverEnter() {
+    this.classList.add('trigger-enter');
+
+    // arrow functions inherit the THIS from its predecessor
+    setTimeout(() => this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'), 150);
+    navBubble.classList.add('open');
+
+    const dropDown = this.querySelector('.dropdown');
+    const dropdownCoords = dropDown.getBoundingClientRect();
+    const navCoords = nav.getBoundingClientRect();
+
+    const coords = {
+      height: dropdownCoords.height,
+      width: dropdownCoords.width,
+      top: dropdownCoords.top - navCoords.top,
+      left: dropdownCoords.left - navCoords.left,
+    };
+
+    navBubble.style.setProperty('width', `${coords.width}px`);
+    navBubble.style.setProperty('height', `${coords.height}px`);
+    navBubble.style.setProperty('transform', `translate(${coords.left}px, ${coords.top}px)`);
+
+  }
+
+  function hoverLeave() {
+    this.classList.remove('trigger-enter');
+    this.classList.remove('trigger-enter-active');
+    navBubble.classList.remove('open');
+    console.log('Left');
+
+  }
+
+  navItems.forEach(ele => ele.addEventListener('mouseenter', hoverEnter));
+  navItems.forEach(ele => ele.addEventListener('mouseleave', hoverLeave));
+
 </script>
 
 </body>
